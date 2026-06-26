@@ -3,7 +3,11 @@ const pool = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  port: 22990,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 module.exports = pool.promise();
