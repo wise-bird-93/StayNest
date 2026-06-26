@@ -15,13 +15,13 @@ const {errorRoute} = require('./controllers/error');
 
 app.use(express.static(path.join(routePath,'public')));
 
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:true}));
 app.use(storeRouter);
 app.use(hostRouter);
 
 app.use(errorRoute);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT , () => {
   console.log(`server running on ${PORT}`);
 });

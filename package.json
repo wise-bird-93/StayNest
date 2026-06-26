@@ -1,15 +1,15 @@
 {
-  "name": "lec10-airbnb",
+  "name": "StayNest",
   "version": "1.0.0",
-  "description": "",
+  "description": "Airbnb-inspired property rental platform built with Node.js, Express.js, MySQL and EJS.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "npx tailwind -i ./views/input.css -o ./public/output.css --watch",
-    "start": "nodemon app.js & npm run tailwind"
+    "start": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Yuvraj Dhingra",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
