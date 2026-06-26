@@ -1,0 +1,70 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="container mx-auto bg-white shadow-lg rounded-lg p-8 mt-10 max-w-6xl">
+        <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
+            Details of <%= home.houseName %>
+        </h2>
+        
+          
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="rounded-lg overflow-hidden">
+                <img src="<%= home.photoURL %>"
+                    class="block"
+                    style="width:300px;height:330px;object-fit:cover;border-radius:12px">
+            </div>
+              
+            <div class="space-y-6">
+                <div class="border-b pb-4">
+                    <h3 class="text-2xl font-semibold mb-2">Description</h3>
+                    <p class="text-gray-600"><%= home.description %></p>
+                </div>
+
+                <div class="border-b pb-4">
+                    <h3 class="text-2xl font-semibold mb-2">Location</h3>
+                    <p class="text-gray-600"><%= home.location %></p>
+                </div>
+                  
+                <div class="border-b pb-4">
+                    <h3 class="text-2xl font-semibold mb-2">Price</h3>
+                    <p class="text-green-600 text-xl font-bold">$<%= home.price %></p>
+                </div>
+                  
+                <div class="border-b pb-4">
+                    <h3 class="text-2xl font-semibold mb-2">Rating</h3>
+                    <div class="flex items-center">
+                        <span class="text-yellow-400 text-xl">★<%= home.rating %> / 10</span>
+                    </div>
+                </div>
+                <div class="mt-7">
+                    <form action="/favourites" method="POST" style="display:flex; gap:20px; align-items:center;">
+                        <input type="hidden" name="id" value="<%= home.id %>">
+
+                        <button
+                            type="submit"
+                            class="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition duration-200"
+                        >
+                            Add to Favourite
+                        </button>
+                        
+                            <a
+                                href="/editHome/<%= home.id%>"
+                                class="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition duration-200"
+                            >
+                                Edit
+                            </a>
+                            <a
+                                href="/delete/<%=home.id%>"
+                                class="bg-red-500 text-white ml-40 px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition duration-200"
+                            >
+                                Delete
+                            </a>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+  </body>
+</html>

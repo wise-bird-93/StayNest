@@ -1,0 +1,75 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="container mx-auto p-8 mt-10 max-w-6xl">
+      <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
+        Favourite homes
+      </h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <% registeredHomes.forEach(home => { %>
+
+<div class="flex bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 h-72">
+
+    <!-- Image -->
+    <div class="w-[30%]">
+        <img
+            src="<%= home.photoURL %>"
+            alt="<%= home.houseName %>"
+            class="w-full h-full object-cover"
+        >
+    </div>
+
+    <!-- Details -->
+    <div class="flex-1 p-6 flex flex-col justify-between">
+
+        <!-- Top -->
+        <div class="space-y-10">
+
+            <div class="flex justify-between items-start w-full">
+
+                <div >
+                    <a href="/viewHome/<%=home.id%>" class="text-3xl font-bold text-gray-900">
+                        <%= home.houseName %>
+                    </a>
+
+                    <p class="text-gray-500 mt-5 text-lg">
+                        📍 <%= home.location %>
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-1 bg-red-50 px-3 py-1 rounded-full ml-6">
+
+                    <span class="text-yellow-500">★</span>
+
+                    <span class="font-semibold text-gray-800">
+                        <%= home.rating %>/10
+                    </span>
+
+                    
+
+                </div>
+                    
+
+            </div>
+
+            <div class="mt-6">
+                <a
+                    href="/deleteFavourites/<%=home.id%>"
+                    class="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition duration-200"
+                >
+                    Delete
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<% }) %>
+      </div>
+    </main>
+  </body>
+</html>
