@@ -43,3 +43,19 @@ Run the application:
 ```bash
 npm start
 ```
+
+## Live Demo
+https://staynest-5vu9.onrender.com
+
+## Features
+- Full-stack Airbnb clone
+- MVC architecture
+- MySQL cloud database (Aiven)
+- Deployed on Render
+
+## Technical Highlights
+- RESTful API design
+- Connection pooling with mysql2
+- Environment-based configuration
+- Cloud database integration
+- Production deployment on Render
