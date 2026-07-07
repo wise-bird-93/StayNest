@@ -5,30 +5,58 @@
         <a
           href="/"
           class="<%= currentPage === 'Home' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Home</a
-        >
+        >Home</a>
       </li>
+      <% if(isLoggedIn) {%>
+        <% if(user && user.userType === 'guest') { %>               
+          <li>
+            <a
+              href="/bookings"
+              class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+              >Bookings</a>
+          </li>
+          <li>
+            <a
+              href="/favourites"
+              class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+            >Favourites</a>
+          </li>
+        <% } else { %>
+          <li>
+            <a
+              href="/host/admin"
+              class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
+            >Add Home</a>
+          </li>
+        <% } %>
+      <% } %>
+      
       <li>
-        <a
-          href="/bookings"
-          class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Bookings</a
+        <% if(!isLoggedIn) {%>
+        <li>
+          <a
+          href="/login"
+          class="hover:bg-red-400 %> py-2 px-4 rounded transition duration-300"
+          >Login</a
         >
+        </li>
+        <li>
+          <a
+            href="/signUp"
+            class="hover:bg-red-400 %> py-2 px-4 rounded transition duration-300"
+            >signUp</a
+          >
+        </li>
+        <% } else { %>
+          <li>
+          <form action="/logout" method="post">
+            <button
+            type="submit" class="hover:bg-red-400 %> py-1 px-4 rounded transition duration-300"> Logout </button>
+          </form>
+          </li>
+        <% } %>
       </li>
-      <li>
-        <a
-          href="/favourites"
-          class="<%= currentPage === 'bookings' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Favourites</a
-        >
-      </li>
-      <li>
-        <a
-          href="/host/admin"
-          class="<%= currentPage === 'addHome' ? 'bg-red-400' : 'hover:bg-red-400' %> py-2 px-4 rounded transition duration-300"
-          >Add Home</a
-        >
-      </li>
+        
     </ul>
     <div
       class="border border-white/80 px-4 py-2 rounded-full font-bold text-lg tracking-wide shadow-sm hover:bg-white hover:text-red-500 transition duration-300"

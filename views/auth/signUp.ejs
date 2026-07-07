@@ -1,0 +1,109 @@
+<%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+    <main class="container mx-auto mt-8 p-8 bg-white rounded-xl shadow-lg">
+      <div class="max-w-md mx-auto">
+        <h1 class="text-3xl font-bold mb-6 text-center text-red-500">Register Your Account</h1>
+        <form action="/signUp" method="POST" class="space-y-7">
+          <%- include('../partials/errors')%>
+          <div>
+            <label for="firstName" class="block mb-2 text-sm font-medium text-gray-700">First name</label>
+            <input
+              id="firstName"
+              type="text"
+              name="firstName"
+              placeholder="Enter your first name"
+              value="<%= oldInput.firstName ? oldInput.firstName:''%>"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+              required
+            />
+          </div>
+          <div>
+            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-700">Last name</label>
+            <input
+              id="lastName"
+              type="text"
+              name="lastName"
+              placeholder="Enter your last name"
+              value="<%= oldInput.lastName ? oldInput.lastName:''%>"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+            />
+          </div>
+          <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-700">Email</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              value="<%= oldInput.email ? oldInput.email:''%>"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+              required
+            />
+          </div>
+          <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-700">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Enter password"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+              required
+            />
+          </div>
+          <div>
+            <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-700">Confirm password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              name="confirmPassword"
+              placeholder="Confirm password"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm focus:border-red-500 focus:outline-none focus:ring-2 focus:ring-red-100"
+              required
+            />
+          </div>
+          <fieldset class="rounded-lg border border-gray-200 bg-gray-50 p-4 space-y-3">
+            <legend class="text-sm font-medium text-gray-700 px-1">User Type</legend>
+            <div class="flex gap-6 mt-3">
+              <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                <input
+  type="radio"
+  name="userType"
+  value="guest"
+  id="guest"
+  class="h-4 w-4 text-red-500 focus:ring-red-500"
+  <%= !oldInput.userType || oldInput.userType === "guest" ? "checked" : "" %>
+/>
+                guest
+              </label>
+              <label class="inline-flex items-center gap-2 text-sm text-gray-700">
+                <input
+  type="radio"
+  name="userType"
+  value="host"
+  id="host"
+  class="h-4 w-4 text-red-500 focus:ring-red-500"
+  <%= oldInput.userType === "host" ? "checked" : "" %>
+/>
+                host
+              </label>
+            </div>
+          </fieldset>
+          <div class="flex items-start gap-3">
+            <input
+              type="checkbox"
+              name="terms"
+              value="Terms & Conditions"
+              id="terms"
+              class="mt-1 h-4 w-4 rounded border-gray-300 text-red-500 focus:ring-red-500"
+            />
+            <label for="terms" class="text-sm text-gray-700">I agree to terms & Conditions</label>
+          </div>
+          <button type="submit" class="w-full rounded-lg bg-red-500 px-4 py-3 text-white transition duration-300 hover:bg-red-600">Register</button>
+        </form>
+      </div>
+    </main>
+  </body>
+</head>

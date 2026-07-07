@@ -15,11 +15,11 @@
 
         <% registeredHomes.forEach(home => { %>
 
-        <a href="/viewHome/<%= home.id %>"
+        <a href="/viewHome/<%= home._id %>"
    class="block w-fit mx-auto bg-gray-50 border border-gray-300 rounded-2xl p-4 shadow-lg hover:shadow-2xl hover:border-red-500 transition-all duration-300">
 
     <img
-        src="<%= home.photoURL %>"
+        src="<%= home.photo %>"
         class="mx-auto"
         style="width:300px;height:180px;object-fit:cover;border-radius:12px;"
     >

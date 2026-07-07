@@ -1,21 +1,28 @@
 {
-  "name": "StayNest",
+  "name": "lec10-airbnb",
   "version": "1.0.0",
-  "description": "Airbnb-inspired property rental platform built with Node.js, Express.js, MySQL and EJS.",
+  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "tailwind": "npx tailwind -i ./views/input.css -o ./public/output.css --watch",
-    "start": "node app.js"
+    "start": "nodemon app.js & npm run tailwind"
   },
   "keywords": [],
-  "author": "Yuvraj Dhingra",
+  "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "connect-mongo": "^6.0.0",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "express-validator": "^7.3.2",
+    "mongodb": "^7.4.0",
+    "mongoose": "^9.7.3",
+    "multer": "^2.2.0",
     "mysql2": "^3.22.5",
     "nodemon": "^3.1.14"
   },

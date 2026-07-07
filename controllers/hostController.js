@@ -1,24 +1,23 @@
-const Home = require('../models/home')  
+const Home = require('../models/home') 
+const fs = require('fs') 
 
 // hostRoute
 exports.getAddHome = (req,res,next) => {
-  Home.fetchAll().then(([homes]) => {
-    res.render('store/home-list',{registeredHomes: homes,pageTitle: 'Add Home to airbnb',currentPage: 'addHome'}); 
+  Home.find().then(homes => {
+    res.render('store/home-list',{registeredHomes: homes,pageTitle: 'Add Home to airbnb',currentPage: 'addHome', isLoggedIn: req.isLoggedIn, user: req.session.user}); 
   });
 }
 
 exports.editHome = (req,res,next) => {
   const homeId = req.params.homeId;
-  Home.findById(homeId).then(([home]) => {
-    console.log("HOME DATA:", home);
-      console.log("FIRST ROW:", home[0]);
+  Home.findById(homeId).then(home => {
 
-    if(home.length === 0){
+    if(!home){
       console.log("Home Not Found");
       return res.redirect("/");
     }
     else {
-      res.render('host/editHome',{home: home[0], pageTitle: "EditHome" ,currentPage: "EditHome"}); 
+      res.render('host/editHome',{home: home, pageTitle: "EditHome" ,currentPage: "EditHome", isLoggedIn: req.isLoggedIn, user: req.session.user}); 
     }  
   }).catch(err => console.log(err));
   
@@ -26,26 +25,35 @@ exports.editHome = (req,res,next) => {
 
 exports.saveUpdatedHome = (req,res,next) => {
   const homeId = req.params.homeId;
-  const {houseName, description, price, location, rating, photoURL} = req.body;
-  
-  Home.update(
-        homeId,
-        houseName,
-        description,
-        price,
-        location,
-        rating,
-        photoURL
-    )
-    .then(() => {
-        res.redirect("/");
-    })
-    .catch(err => console.log(err));
+  const {houseName, description, price, location, rating} = req.body;
+
+  Home.findById(homeId).then((home) => {
+    home.houseName = houseName;
+    home.description = description;
+    home.price = price;
+    home.location = location;
+    home.rating = rating;
+
+    if(req.file){
+      fs.unlink(home.photo, (err) => {
+        if (err) {
+          console.log("Error while deleting file ", err);
+        }
+      });
+      home.photo = req.file.path;
+
+    }
+
+    home.save().then(result => {
+      console.log("Home Updated", result);
+      res.redirect("/");
+    }).catch(err => console.log(err));
+  })
 }
 
 exports.deleteHome = (req,res,next) => {
   const id = req.params.homeId;
-  Home.delete(id).then(() => {
+  Home.findByIdAndDelete(id).then(() => {
     res.redirect("/");
   }).catch(err => {
     console.log(err);
@@ -54,33 +62,43 @@ exports.deleteHome = (req,res,next) => {
 }
 
 exports.postHome = (req,res,next) => {
-  console.log(req.body);
-  const {houseName, description, price, location, rating, photoURL} = req.body;
-  const home = new Home(houseName, description, price, location, rating, photoURL);
-  home.save();
+  const {houseName, description, price, location, rating} = req.body;
+
+  if(!req.files || !req.files.photo){
+    return res.status(422).send("No image given");
+  }
+
+  const photo = req.files.photo[0].path;
+  const rules = req.files.rules[0].path;
+
+  const home = new Home({houseName, description, price, location, rating, photo, rules});
+
+  home.save().then(() => {
+    console.log("Home saved Successfully");
+  });
 
   res.render('host/homeAdded',{pageTitle: 'Home added successfully',currentPage: 'HomeAdded'});
 }
 
 //userRoute
 exports.viewHomes = (req,res,next) => {
-  Home.fetchAll().then(([registeredHomes]) => {
-    res.render('host/home',{registeredHomes: registeredHomes, pageTitle: 'airbnb home', currentPage: 'Home'});
+  Home.find().then(registeredHomes => {
+    res.render('host/home',{registeredHomes: registeredHomes, pageTitle: 'airbnb home', currentPage: 'Home', isLoggedIn: req.isLoggedIn, user: req.session.user});
   });
   
 }
 
 exports.getHomeDetails = (req,res,next) => {
   const homeId = req.params.homeId;
-  Home.findById(homeId).then(([homes]) => {
-      if (homes.length === 0) {
+  Home.findById(homeId).then(homes => {
+      if (!homes) {
         console.log("Home Not Found");
         return res.redirect("/");
       }
       else {
-        const home = homes[0];
-        res.render('host/home-details',{home: home, pageTitle: home.houseName, currentPage: 'HomeDetail'});
+        res.render('host/home-details',{home: homes, pageTitle: homes.houseName, currentPage: 'HomeDetail', isLoggedIn: req.isLoggedIn, user: req.session.user});
       }
     }).catch(err => console.log(err));
 
 }
+
