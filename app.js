@@ -1,6 +1,7 @@
 
 const dns = require("dns");
 dns.setServers(["8.8.8.8", "8.8.4.4"]);
+const process = require('process');
 
 const multer = require('multer');
 const express = require('express');
@@ -93,7 +94,7 @@ app.use("/", (req,res,next) => {
 
 const PORT = 3000;
 
-mongoose.connect(db_path).then(() => {
+mongoose.connect(process.env.db_path).then(() => {
   console.log('Connected to Mongoose');
   app.listen(PORT , () => {
     console.log(`server running on ${PORT}`);
