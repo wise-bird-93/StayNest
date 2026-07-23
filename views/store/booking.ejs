@@ -2,9 +2,122 @@
   </head>
   <body>
     <%- include('../partials/nav') %>
-    <main class="container mx-auto mt-20 text-center">
-      <h2 class="text-3xl font-bold text-red-500 mb-4">My Bookings</h2>
-      
+    <main class="container mx-auto p-8 mt-10 max-w-6xl">
+      <h2 class="text-3xl text-red-500 font-bold text-center mb-6">
+        Booked homes
+      </h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <% bookings.forEach(booking => { %>
+          <%
+    const checkIn = new Date(booking.checkIn);
+    const checkOut = new Date(booking.checkOut);
+
+    const nights = Math.ceil(
+        (checkOut - checkIn) / (1000 * 60 * 60 * 24)
+    );
+
+    const totalPrice = nights * Number(booking.home.price);
+%>
+
+<div class="flex bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 h-72">
+
+    <!-- Image -->
+    <div class="w-[30%]">
+        <img
+            src="<%= booking.home.photo %>"
+            alt="<%= booking.home.houseName %>"
+            class="w-full h-full object-cover"
+        >
+    </div>
+
+    <!-- Details -->
+    <div class="flex-1 p-6 flex flex-col justify-between">
+
+        <!-- Top -->
+        <div class="space-y-10">
+
+            <div class="flex justify-between items-start w-full">
+
+                <div >
+                    <a href="/viewHome/<%=booking.home._id%>" class="text-3xl font-bold text-gray-900">
+                        <%= booking.home.houseName %>
+                    </a>
+
+                    <p class="text-gray-500 mt-5 text-lg">
+                        📍 <%= booking.home.location %>
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-1 bg-red-50 px-3 py-1 rounded-full ml-6">
+
+                    <span class="text-yellow-500">★</span>
+
+                    <span class="font-semibold text-gray-800">
+                        <%= booking.home.rating %>/10
+                    </span>
+
+                    
+
+                </div>
+                    
+
+            </div>
+
+            <div class="space-y-2 text-gray-700 mt-4">
+
+    <p>
+        <strong>Check In:</strong>
+        <%= checkIn.toLocaleDateString() %>
+    </p>
+
+    <p>
+        <strong>Check Out:</strong>
+        <%= checkOut.toLocaleDateString() %>
+    </p>
+
+    <p>
+        <strong>Nights:</strong>
+        <%= nights %>
+    </p>
+
+    <p>
+        <strong>Price / Night:</strong>
+        ₹<%= booking.home.price %>
+    </p>
+
+    <p class="text-xl font-bold text-red-500">
+        Total : ₹<%= totalPrice %>
+    </p>
+
+    <p>
+        <strong>Mobile:</strong>
+        <%= booking.mobile %>
+    </p>
+
+    <p>
+        <strong>Booked On:</strong>
+        <%= new Date(booking.bookedAt).toLocaleDateString() %>
+    </p>
+
+</div>
+            
+            <div class="mt-6">
+                <a
+                    href="/deleteBookings/<%= booking._id %>"
+                    class="bg-red-500 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-red-600 transition duration-200"
+                >
+                    Delete
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<% }) %>
+      </div>
     </main>
   </body>
 </html>

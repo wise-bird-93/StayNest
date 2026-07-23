@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Home'
     }],
+    
 })
 
 module.exports = mongoose.model('user', userSchema);
